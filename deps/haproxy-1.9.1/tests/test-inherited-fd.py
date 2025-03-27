@@ -9,6 +9,7 @@ mode.
 """
 
 import socket, subprocess, fcntl
+from security import safe_command
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -20,4 +21,4 @@ s.bind((socket.gethostname(), 5555))
 s.listen(1)
 FD = s.fileno()
 
-subprocess.Popen('NEWFD={} ./haproxy -W -f haproxy.cfg'.format(FD), shell=True, close_fds=False)
+safe_command.run(subprocess.Popen, 'NEWFD={} ./haproxy -W -f haproxy.cfg'.format(FD), shell=True, close_fds=False)
