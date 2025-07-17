@@ -41,7 +41,7 @@ def main():
     for release in releaseDoc["releases"]:
         for feature in release["features"]:
             if feature["c2jModels"] != None:
-                response = requests.get(feature["c2jModels"])
+                response = requests.get(feature["c2jModels"], timeout=60)
                 if response.status_code != 200:
                     print("Error downloading {0} artifacts skipping.", json.dumps(feature))
                     continue
