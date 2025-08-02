@@ -239,7 +239,7 @@ def CopyPDBs(config, libDir, installDirectoryPrefix, platformInstallQualifier, c
                 
                 sourceFile = os.path.join(rootDir, dirName, config, dirName + ".pdb")
                 if os.path.isfile(sourceFile) and not dirName.endswith("-tests"):
-                    subprocess.check_call( "copy " + sourceFile + " \"" + destDirectory + "\"", shell = True )
+                    subprocess.check_call( "copy " + sourceFile + " \"" + destDirectory + "\"", shell = False)
     
 
 def CopyAndroidExternalDependencies(config, installDirectory):
@@ -249,7 +249,7 @@ def CopyAndroidExternalDependencies(config, installDirectory):
         dependentInstallDirectory = '"' + os.path.join( installDirectory, "external", dependentLib ) + '"'
         dependent_install_call = "cmake -DCMAKE_INSTALL_CONFIG_NAME=" + config + " -DCMAKE_INSTALL_PREFIX=" + dependentInstallDirectory + " -P " + dependentInstallFile + " .."
         print( "dependent install call = " + dependent_install_call )
-        subprocess.check_call( dependent_install_call, shell = True )
+        subprocess.check_call( dependent_install_call, shell = False)
 
 
 def RemoveExternalAndroidDirectories():
@@ -352,7 +352,7 @@ def Main():
 
             cmake_call_list = cmake_call_list + " " + sourceDir
             print( "cmake call = " + cmake_call_list )
-            subprocess.check_call( cmake_call_list, shell = True )
+            subprocess.check_call( cmake_call_list, shell = False)
 
             parallelBuildOption = buildEnvironment[ 'parallel_option' ].replace("??", str(parallelJobs))
             build_call_list = buildEnvironment[ 'global_build_call' ] + archConfig[ 'build_params' ]
@@ -363,7 +363,7 @@ def Main():
 
             install_call = "cmake -DCMAKE_INSTALL_CONFIG_NAME=" + archConfig[ 'config' ] + " -DCMAKE_INSTALL_PREFIX=" + quotedInstallDirectory + " -P cmake_install.cmake " + sourceDir
             print( "install call = " + install_call )
-            subprocess.check_call( install_call, shell = True )
+            subprocess.check_call( install_call, shell = False)
 
             # platform specific stuff
         
