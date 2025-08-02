@@ -206,7 +206,7 @@ def Main():
     # zip up the target directory
     os.chdir(baseDir)
     zipCommand = "jar -cMf \"" + uploadZipFile + "\" " + sdkDir
-    subprocess.check_call( zipCommand, shell = True )
+    subprocess.check_call( zipCommand, shell = False)
     os.chdir(sourceDir)
 
     # shutil.rmtree( destDir )
